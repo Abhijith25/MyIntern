@@ -1,0 +1,65 @@
+<!-- extends help in extending the top and latter part and keep only the remaining part -->
+{% extends "layout.html" %}
+{% block content %}
+<!-- block content is where the unique part in each file is to be kept and that gets replaced in the layout file -->
+    <div class="content-section">
+        <form method="POST" action="">
+            <!-- hidden tag method is a part of protecting the form from various attacks  -->
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom">Log In</legend>
+                
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    <!-- handle errors and display them to the user -->
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    <!-- handle errors and display them to the user -->
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{form.remember(class="form-check-input")}}
+                    {{form.remember.label(class="form-check-label")}}
+
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password ?</a>
+
+            </small>
+
+        </form>
+    </div>
+
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Didn't Join Us yet ? <a class="ml-2" href="{{ url_for('register') }}">Sign Up</a>
+        </small>
+    </div>
+{% endblock content %}
+<!-- each block is ended as for for and if -->
