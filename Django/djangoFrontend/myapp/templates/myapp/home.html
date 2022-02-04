@@ -1,0 +1,176 @@
+{% load static %}
+<!-- load static code in django helps in loading files in the static folder  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/main.css' %}">
+
+
+
+    {% if title %}
+    <title>My Application - {{ title }}</title>
+    {% else %}
+    <title>My Application</title>
+    {% endif %}
+
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="{% url 'myapp-home' %}">My Application</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="{% url 'myapp-home' %}">Home</a>
+                        <!-- "studyblog-home" - is the name given in urls.py in the app folder -->
+                        <a class="nav-item nav-link" href="{% url 'myapp-about' %}">About</a>
+                    </div>
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+
+                        {% if username %}
+                        <a class="nav-item nav-link" href="{% url 'myapp-logout' %}">{{username}}</a>
+                        <a class="nav-item nav-link" href="{% url 'myapp-addposts' %}">Add Posts</a>
+
+
+                        {% else %}
+
+
+                        <a class="nav-item nav-link" href="{% url 'myapp-login' %}">Login</a>
+                        <a class="nav-item nav-link" href="{% url 'myapp-register' %}">Register</a>
+
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+
+
+        <main role="main" class="container">
+
+            {% include 'myapp/includes/messages.html' %}
+
+
+            {% for post in posts %}
+
+
+            <div class="card" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;border: 0.5px solid #5F788A;">
+                <h5 class="card-header">{{post.author}}</h5>
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.content}}</p>
+                    <a href="#" class="small text-muted">Posted on: <b>{{post.date_posted }}</b></a>
+                    <div class="container-fluid">
+                        <div class="row justify-content-md-center">
+                            <div class="col"></div>
+                            <div class="col"></div>
+                            <div class="col justify-content" style="margin-left: 200px;">
+                                <div class="bg-white">
+                                    <a class="d-flex flex-row fs-12">
+                                        <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
+                                                class="ml-1">Like</span></div>
+                                        <div class="like p-2 cursor" data-toggle="collapse" href="#collapseExample"
+                                            role="button" aria-expanded="false" aria-controls="collapseExample"><i
+                                                class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                                        <div class="like p-2 cursor"><i class="fa fa-share"></i><span
+                                                class="ml-1">Share</span></div>
+                                    </a>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div id="collapse-2" class="bg-light p-2 collapse" data-parent="#myGroup">
+                            <div class="d-flex flex-row align-items-start"><i
+                                    class="fa fa-facebook border p-3 rounded mr-1"></i><i
+                                    class="fa fa-twitter border p-3 rounded mr-1"></i><i
+                                    class="fa fa-linkedin border p-3 rounded mr-1"></i><i
+                                    class="fa fa-instagram border p-3 rounded mr-1"></i><i
+                                    class="fa fa-dribbble border p-3 rounded mr-1"></i> <i
+                                    class="fa fa-pinterest-p border p-3 rounded mr-1"></i> </div>
+                        </div>
+
+                        <!-- begin collapse -->
+                        <div class="collapse" id="collapseExample">
+
+                            <div class="bg-light p-2">
+                                <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                        src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                                        width="40" alt="profile Image"><textarea
+                                        class="form-control ml-1 shadow-none textarea"></textarea></div>
+                                <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                                        type="button">Post comment</button><button
+                                        class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+                                        type="button">Cancel</button></div>
+                            </div>
+
+                        </div>
+
+                        <!-- end collapse -->
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <br>
+            <br>
+
+            {% endfor %}
+
+
+            <!-- <div class="col-md-4">
+      <div class="content-section">
+        <h3>Our Sidebar</h3>
+        <p class='text-muted'>You can put any information here you'd like.
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-light">Latest Posts</li>
+            <li class="list-group-item list-group-item-light">Announcements</li>
+            <li class="list-group-item list-group-item-light">Calendars</li>
+            <li class="list-group-item list-group-item-light">etc</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+  </div> -->
+        </main>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+</html>
